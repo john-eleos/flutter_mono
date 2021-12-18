@@ -42,6 +42,20 @@ class MonoFlutter {
 
     /// Show MonoView Logs
     bool showLogs = false,
+
+    /// Show PAY WIDGET
+    bool pay = false;
+
+  // PAYMENT OPTIONS: AMOUNT IN KOBO IF [pay] IS TRUE. THE DEFAULT CURRENCY IN NAIRA
+  final String? amount,
+  
+  // PAYMENT OPTIONS: TRANSACTION DESCRIPTION IF [pay] IS TRUE
+  final String? description,
+
+  // PAYMENT OPTIONS: TRANSACTION UNIQUE ID TO CROSS REFERENCE WEBHOOK RESPONSE SENT BY MONO IF [pay] IS TRUE  
+  final String? _uid
+
+
     String? reference,
   }) async =>
       showDialog(
@@ -61,6 +75,10 @@ class MonoFlutter {
                   onEvent: onEvent,
                   showLogs: showLogs,
                   configJson: configJson,
+                  pay:pay,
+                  amount:amount,
+                  description:description,
+                  _uid:_uid
                 ),
               ),
             ),

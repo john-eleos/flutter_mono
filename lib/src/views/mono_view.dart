@@ -56,6 +56,19 @@ class MonoView extends StatefulWidget {
   /// Show MonoView Logs
   final bool showLogs;
 
+  /// Show PAY WIDGET
+  final bool pay;
+
+  // PAYMENT OPTIONS: AMOUNT IN KOBO IF [pay] IS TRUE. THE DEFAULT CURRENCY IN NAIRA
+  final String? amount,
+  
+  // PAYMENT OPTIONS: TRANSACTION DESCRIPTION IF [pay] IS TRUE
+  final String? description,
+
+  // PAYMENT OPTIONS: TRANSACTION UNIQUE ID TO CROSS REFERENCE WEBHOOK RESPONSE SENT BY MONO IF [pay] IS TRUE  
+  final String? _uid
+
+
   const MonoView({
     Key? key,
     required this.apiKey,
@@ -67,6 +80,10 @@ class MonoView extends StatefulWidget {
     this.reference,
     this.configJson,
     this.showLogs = false,
+    this.pay = false,
+    this.amount,
+    this.description,
+    this._uid
   })  : assert(apiKey != null, 'API key cannot be null'),
         super(key: key);
 
@@ -121,10 +138,17 @@ class _MonoViewState extends State<MonoView> {
                     AsyncSnapshot<WebViewController> controller) {
                   return WebView(
                     initialUrl: Uri.dataFromString(
-                      buildMonoHtml(
+                      !widget.pay?buildMonoHtml(
                         widget.apiKey,
                         widget.configJson,
                         widget.reference ?? '',
+                      ):buildMonoOneTimePaymentHtml(
+                        widget.apiKey,
+                        widget.configJson,
+                        widget.reference ?? '',
+                        widget.amount,
+                        widget.description,
+                        widget._uid
                       ),
                       mimeType: 'text/html',
                     ).toString(),

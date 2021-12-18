@@ -87,17 +87,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     onPressed: () async {
                       try {
+
+                        // example for one time payment
                         await MonoFlutter.launchMono(
                           context,
                           key: monoPublicKey,
                           showLogs: true,
-                          reference: 'reference',
-                          configJson: '''{
-                                "selectedInstitution": {
-                                  "id": "5f2d08c060b92e2888287706", 
-                                  "auth_method": "internet_banking" 
-                                }
-                          }''',
+                          reference: '',
+                          configJson: "",
+                          pay:true,
+                          amount: "10000", // 100 naira in kobo
+                          description:"checking for a new payment option?"
+                          _uid:"MONO-SAMPLE-${new Random().nextInt(10000).toString()}"
                           onClose: () {
                             print('onClose');
                           },
